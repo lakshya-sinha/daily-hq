@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0B1220;
+  --foreground: #E5E7EB;
+  --primary-indigo: #3B4EFF;
+  --primary-cyan: #4FD1C5;
+  --primary-blue: #334EF6;
+  --functional-green: #22C55E;
+  --functional-red: #EF4444;
+  --background-card: #111827;
+  --background-border: #1F2937;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary-indigo: var(--primary-indigo);
+  --color-primary-cyan: var(--primary-cyan);
+  --color-primary-blue: var(--primary-blue);
+  --color-functional-green: var(--functional-green);
+  --color-functional-red: var(--functional-red);
+  --color-background-card: var(--background-card);
+  --color-background-border: var(--background-border);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --font-sans: 'Inter', 'Plus Jakarta Sans', 'Satoshi', 'Manrope', 'DM Sans', sans-serif;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+}
+
+/* Custom Css  */
+
+/* Landing Page  */
+
+.bg-gradient-mast {
+    backdrop-filter: blur(25px);
+   background: linear-gradient(
+    to top,
+    rgba(32, 82, 247, 0.267),
+    rgba(22, 248, 135, 0.274)
+  );
+}
