@@ -18,16 +18,18 @@ const Signup = () => {
       </div>
 
       <div className="second  p-5 w-[40%] flex justify-center items-center gap-4 ">
-        <div className="signup-box border-2 border-background-border h-[520px] w-full rounded-xl p-7 flex flex-col justify-between bg-gray-950/80 shadow-lg shadow-black">
+        <div className="signup-box border-2 border-background-border w-full rounded-xl p-7 flex flex-col justify-between bg-gray-950/80 shadow-lg shadow-black">
           <div className="firstl">
             <h1 className="font-bold text-2xl mb-2">Sign Up</h1>
           </div>
           <div className="secondl">
             <form action="" className="flex flex-col gap-3 text-white">
-              <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl "  placeholder="Shop Name"/>
+              <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl "  placeholder="Name"/>
               <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl " placeholder="Mobile No"/>
               <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl "  placeholder="Email Address"/>
               <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl "  placeholder="Address"/>
+              <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl "  placeholder="Shop Name"/>
+              <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl "  placeholder="Shop Address"/>
               <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl "  placeholder="Password"/>
             </form>
           </div>

@@ -46,3 +46,8 @@ body, html {
     rgba(22, 248, 135, 0.274)
   );
 }
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    box-shadow: none; /* Removes potential glow/shadow in some browsers/frameworks */
+}
