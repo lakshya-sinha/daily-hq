@@ -15,7 +15,7 @@ const Landing = () => {
               alt=""
             ></Image>
 
-            <h1 className="text-2xl">Daily HQ</h1>
+            <h1 className="lg:text-2xl">Daily HQ</h1>
           </div>
 
           <div className="nav-second flex gap-5 items-center text-gray-200 ">
@@ -57,7 +57,7 @@ const Landing = () => {
               w-full"
         >
           <div className="left-content flex flex-col gap-5 ">
-            <div className="row-1 text-6xl leading-18 font-bold">
+            <div className="row-1 text-5xl lg:text-6xl  lg:leading-18 font-bold">
               <h1>
                 Stop Guessing Your <br /> Shop&apos;s Profit.
                 <span className="text-functional-green">Know it.</span>
@@ -371,7 +371,7 @@ const Landing = () => {
               <p>Profit Clarity at a Glance</p>
             </div>
             <div className="row2">
-              <h1 className="text-8xl font-bold">Visualise Your <span className="text-functional-green">Success.</span></h1>
+              <h1 className="text-5xl lg:text-8xl font-bold">Visualise Your <span className="text-functional-green">Success.</span></h1>
             </div>
             <div className="row3">
               <p className="text-text-secondary w-[70%]">Get instant insights into your shop&apos;s performance with our intuitive dashboard. Track sales, expenses, and profit margins in real-time, empowering you to make informed decisions that drive growth.</p>
