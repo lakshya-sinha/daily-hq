@@ -22,7 +22,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { UserContext } from "@/context/UserContext"
+import { UserContext } from "@/context/UserContext";
+import ScrollFix from "@/components/Dashboard/utils/ScrollFix";
 
 
 
@@ -49,6 +50,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     isOwner: true,
   });
 
+ 
   const router = useRouter();
   const pathname = usePathname()
 
@@ -77,23 +79,21 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       async function getUserData(){
         const userData = await axios.get('/api/me');
         const realData = userData.data.data;
-        console.log(userData.data.data);
         setUser(realData);
       }
       getUserData();
     }, [])
 
   return (
-    <main className="bg-[url('/images/dashboard/background.png')] w-full h-screen bg-cover text-white flex">
-      
+    <main className="bg-[url('/images/dashboard/background.png')] w-full h-screen bg-cover text-white  flex">
       {/* SIDEBAR */}
-      <div className="sidebar w-[20%] p-2">
+      <div className="sidebar w-[20%] p-2 h-screen">
         <div className="sidebar-container p-4 h-full flex flex-col justify-between bg-gray-950/25 rounded-2xl ">
 
           {/* LOGO */}
           <div className="border border-gray-700 bg-gray-800/50 rounded-2xl p-2">
             <div className="flex items-center gap-3">
-              <Image src="/images/landing/logo.png" width={40} height={40} alt="Logo" />
+              <Image src="/images/landing/logo.png" width={40} height={40} alt="Logo" loading="eager"   className="w-10 h-10"/>
               <div>
                 <h1 className="text-xl">Daily HQ</h1>
                 <p className="text-text-secondary text-sm">Analytics Dashboard</p>
@@ -185,9 +185,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       {/* MAIN AREA */}
-      <div className="main-area w-[80%] ">
-        <div className="area-container bg-gray-950/90 rounded-2xl w-full h-full p-4">
-         <div className="area1 border-b-gray-400 border-b p-2 w-full ">
+      <div className="main-area w-[80%] h-screen ">
+        <div className="area-container bg-gray-950/90 rounded-2xl w-full h-full flex flex-col p-2">
+         <div className="header border-b-gray-400 border-b p-2 w-full ">
             <div className="topbar-container flex justify-between ">
               <div className="first flex gap-2 items-center  border-gray-400 border rounded-sm p-2 h-12">
                 <div className="search-icon p-2"><Search /></div> 
@@ -210,10 +210,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
              
             </div>
           </div>
-          
-        <UserContext.Provider value={user}> 
-          {children}
-        </UserContext.Provider>
+
+              <UserContext.Provider value={user}> 
+                  <div className="flex-1 min-h-0">
+                    <ScrollFix>
+                      {children}
+                    </ScrollFix>
+                  </div>
+              </UserContext.Provider>
 
         </div>
       </div>

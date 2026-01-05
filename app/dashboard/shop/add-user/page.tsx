@@ -1,5 +1,5 @@
 'use client'
-import { UserRoundPlus } from "lucide-react";
+import { UserRoundPlus, UsersRound, Trash, Pencil } from "lucide-react";
 import { useState, useEffect} from "react";
 import axios from 'axios';
 import toast, {Toaster }   from 'react-hot-toast';
@@ -40,6 +40,9 @@ const addUser: React.FC<Props> = ({  }) => {
     isOwner: false,
   });
 
+   const [worker, setWorker] = useState<User[]>([])
+
+
  useEffect(() => {
     if (!loggedUser.shopName) return
 
@@ -49,12 +52,30 @@ const addUser: React.FC<Props> = ({  }) => {
       shopAddress: loggedUser.shopAddress,
     }))
 
+   
   }, [loggedUser])
+
+  useEffect(()=>{
+    if (!user.shopName) return;
+
+
+    async function getData(){
+      const shopName = {shopName: user.shopName}
+      const data = await axios.post('/api/admin/worker/fetch', shopName);
+      const workerData = data.data.data;
+      setWorker(workerData);
+    }
+
+
+    getData();
+
+  }, [user.shopName])
 
   const addUser = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
-      e.preventDefault();
+      e.preventDefault(); 
       const res = await axios.post('/api/signup', user);
+      setWorker(prev => ([...prev, user]))
       console.log(res);
       toast.dismissAll();
       toast.success(res.data.message);
@@ -67,56 +88,156 @@ const addUser: React.FC<Props> = ({  }) => {
   }
 
   return (
-      <div className="add-user-container w-full mt-2  w-full p-2">
-        <Toaster/> 
-        <div className="title-container text-2xl flex gap-2 items-center border p-2 mb-2">
-          <UserRoundPlus />
-          <h1>Add New Worker</h1>
-        </div>
-        <div className="new-user-container border p-2">
-           <form onSubmit={(e) => {addUser(e)}}  className="flex flex-col gap-2 lg:gap-3 text-white">
-              <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl "  name="fullName" placeholder="Name"
-                value={user.fullName}
-                onChange={(e)=>{
-                  setUser(prev => ({...prev, fullName: e.target.value}))
-                }}
-              />
-              <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl "  name="mobileNo" placeholder="Mobile No"
-                value={user.mobileNo}
-                onChange={(e)=>{
-                  setUser(prev => ({...prev, mobileNo: e.target.value}))
-                }}
-              />
-              <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl "  name="email" placeholder="Email Address"
-                value={user.email} 
-                onChange={(e)=>{
-                  setUser(prev => ({...prev, email: e.target.value}))
-                }}
-              />
-              <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl "  name="address" placeholder="Address"
-                value={user.address} 
-                onChange={(e)=>{
-                  setUser(prev => ({...prev, address: e.target.value}))
-                }}
-              />
-             
-           
-              <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl "  name="password" placeholder="Password"
-                value={user.password}
-                onChange={(e)=>{
-                  setUser(prev => ({...prev, password: e.target.value}))
-                }}  
-              />
-              <input type="text" className="bg-[#1c1b1b]  shadow-inner px-3 py-2.5 rounded-xl "  name="petName" placeholder="Pet Name?"
-                value={user.petName}
-                onChange={(e)=>{
-                  setUser(prev => ({...prev, petName: e.target.value}))
-                }}  
-              />
-              <button className="px-4 py-2 bg-primary-blue text-white text-center  w-full rounded-2xl shadow-inner" type="submit">Create Account</button>
-            </form>
-        </div>
-      </div>
+
+
+      <div className="add-user-container mt-4 p-2">
+
+  <Toaster /> 
+
+  {/* ================= Add New Worker ================= */}
+  <div className="title-container text-xl flex gap-2 items-center 
+    border border-white/10 
+    bg-gradient-to-r from-black/60 to-black/30
+    backdrop-blur-md
+    rounded-xl px-4 py-3 mb-3
+    text-white shadow-lg">
+    <UserRoundPlus />
+    <h1>Add New Worker</h1>
+  </div>
+
+  <div className="
+    new-user-container
+    border border-white/10 
+    bg-black/40 backdrop-blur-lg
+    rounded-2xl p-4
+    shadow-[0_0_40px_rgba(0,0,0,0.6)]
+  ">
+    <form
+      onSubmit={(e) => { addUser(e) }}
+      className="flex flex-col gap-3 text-white"
+    >
+
+      {/* Inputs */}
+      {[
+        { name: "fullName", placeholder: "Name", value: user.fullName },
+        { name: "mobileNo", placeholder: "Mobile No", value: user.mobileNo },
+        { name: "email", placeholder: "Email Address", value: user.email },
+        { name: "address", placeholder: "Address", value: user.address },
+        { name: "password", placeholder: "Password", value: user.password },
+        { name: "petName", placeholder: "Pet Name?", value: user.petName },
+      ].map((field, i) => (
+        <input
+          key={i}
+          type="text"
+          name={field.name}
+          placeholder={field.placeholder}
+          value={field.value}
+          onChange={(e) =>
+            setUser((prev) => ({ ...prev, [field.name]: e.target.value }))
+          }
+          className="
+            bg-neutral-900/80
+            border border-white/10
+            focus:border-primary-blue
+            focus:ring-2 focus:ring-primary-blue/40
+            px-4 py-3 rounded-xl
+            placeholder:text-gray-400
+            text-white
+            transition-all duration-200
+            shadow-inner outline-none
+          "
+        />
+      ))}
+
+      {/* Button */}
+      <button
+        type="submit"
+        className="
+          px-4 py-3 w-full rounded-2xl
+          bg-gradient-to-r from-primary-blue to-blue-500
+          hover:brightness-110 active:scale-[0.98]
+          transition-all duration-200
+          text-white font-medium
+          shadow-[0_10px_30px_rgba(59,78,255,0.35)]
+        "
+      >
+        Create Account
+      </button>
+    </form>
+  </div>
+
+  {/* ================= All Workers ================= */}
+  <div className="user-container mt-4">
+    <div className="title-container text-xl flex gap-2 items-center 
+      border border-white/10 
+      bg-gradient-to-r from-black/60 to-black/30
+      backdrop-blur-md
+      rounded-xl px-4 py-3 mb-3
+      text-white shadow-lg">
+      <UsersRound />
+      <h1>All Company Workers</h1>
+    </div>
+
+    <div className="
+      relative overflow-x-auto
+      bg-black/40 backdrop-blur-lg
+      border border-white/10
+      rounded-2xl
+      shadow-[0_0_40px_rgba(0,0,0,0.6)]
+    ">
+      <table className="w-full text-sm text-left text-gray-200">
+        <thead className="
+          text-sm text-gray-300
+          bg-black/60 backdrop-blur
+          border-b border-white/10
+        ">
+          <tr>
+            <th className="px-6 py-3 font-medium">Name</th>
+            <th className="px-6 py-3 font-medium">Email</th>
+            <th className="px-6 py-3 font-medium">Mobile No</th>
+            <th className="px-6 py-3 font-medium">Address</th>
+            <th className="px-6 py-3 font-medium">Operations</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {worker ? (
+            worker.map((value, index) => (
+              <tr
+                key={index}
+                className="
+                  bg-transparent
+                  border-b border-white/5
+                  hover:bg-white/5
+                  transition-colors duration-150
+                "
+              >
+                <th className="px-6 py-4 font-medium text-white whitespace-nowrap">
+                  {value.fullName}
+                </th>
+                <td className="px-6 py-4">{value.email}</td>
+                <td className="px-6 py-4">{value.mobileNo}</td>
+                <td className="px-6 py-4">{value.address}</td>
+                <td className="px-6 py-4 flex items-center gap-3 text-sm">
+                  <Pencil className="text-blue-300 hover:text-blue-400 transition cursor-pointer" />
+                  <Trash className="text-red-400 hover:text-red-500 transition cursor-pointer" />
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={5} className="px-6 py-6 text-center text-gray-400">
+                Loading...
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
   );
 };
 

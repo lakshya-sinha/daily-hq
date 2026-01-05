@@ -33,6 +33,7 @@ const Shop = () => {
             <div className="area3 bg-red-200 w-full h-full rounded-2xl shadow-2xl p-2 ">sales revenue graph display here </div>
             <div className="area4 bg-red-400 h-full w-full rounded-2xl shadow-2xl p-2">recent order display here</div>
           </div>
+
     </>
 
   )

@@ -2,6 +2,7 @@
 import { redirect } from "next/navigation"
 import { useEffect } from "react";
 import axios from 'axios'
+import Image from "next/image";
 
 const Page = () => {
 
@@ -25,10 +26,9 @@ const Page = () => {
   }, []);
 
   return (
-    <main className="w-screen h-screen bg-black flex-col flex items-center justify-center text-4xl text-white text-center">
-       <div>redirecting.....</div>
-       <br />
-       <div>To <span className="text-blue-200">Dashboard</span></div>
+    <main className=" gap-4 w-screen h-screen bg-black flex-col flex items-center justify-center text-4xl text-white text-center">
+       <Image  src={'/images/landing/logo.png'} height={100} width={100} alt="" className="animate-pulse"/> 
+      <div>Redirect -{'>'} <span className="text-blue-200">dashboard</span></div>
     </main>
   )
 }
