@@ -158,7 +158,6 @@ const addUser: React.FC<Props> = ({  }) => {
           hover:brightness-110 active:scale-[0.98]
           transition-all duration-200
           text-white font-medium
-          shadow-[0_10px_30px_rgba(59,78,255,0.35)]
         "
       >
         Create Account

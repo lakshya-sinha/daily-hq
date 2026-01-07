@@ -5,13 +5,13 @@ export default function Component() {
   const loggedUser = useUser()
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-6">
-      <div className="relative w-full max-w-sm rounded-2xl border border-gray-700/60 
+    <div className="w-full h-full flex  p-6 ">
+      <div className="relative w-full rounded-2xl border border-gray-700/60 
                       bg-gradient-to-br from-[#0b0f1a]/80 to-[#0f172a]/80 
                       backdrop-blur-xl shadow-[0_0_40px_rgba(0,0,0,0.6)] p-6">
 
         {/* Avatar */}
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-center text-center w-full">
           <div className="relative mb-4">
             <img
               src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
@@ -39,6 +39,11 @@ export default function Component() {
           <p className="text-sm mt-2 text-blue-400 font-medium">
             Admin Access: {loggedUser.isOwner ? 'Yes' : 'No'}
           </p>
+          
+          <p className="text-sm mt-2 text-blue-400 font-medium">
+           Shop Address: {loggedUser.shopAddress}
+          </p>
+
 
           <p className="text-sm text-gray-300 mt-1">
             {loggedUser.mobileNo}
@@ -63,6 +68,21 @@ export default function Component() {
               Edit
             </button>
           </div>
+
+           {/* Divider */}
+          <div className="w-full h-px bg-gray-700/60 my-5" />
+
+          <p className="text-sm mt-2  font-medium text-red-400">
+           <span className='text-xl text-white'>📄 Terms and Conditions – DailyHQ Application</span> <br></br>
+            {/* Divider */}
+          <div className="w-full h-px bg-gray-700/60 my-5" />
+
+            <span className='text-lg text-blue-400'>Last Updated: 07 January 2026</span> <br></br>
+
+            Welcome to DailyHQ. By accessing or using the DailyHQ application (“App”, “Service”), you agree to comply with and be bound by these Terms and Conditions (“Terms”). If you do not agree, please do not use the application.
+          </p>
+
+
         </div>
       </div>
     </div>
