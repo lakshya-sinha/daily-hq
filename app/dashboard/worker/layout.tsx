@@ -7,6 +7,8 @@ import {
   HandHelping,
   Settings,
   Plus,
+  Search,
+  Bell,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -14,8 +16,10 @@ import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import axios from "axios"
+import { UserContext } from "@/context/UserContext";
 
 interface UserType {
+  _id: string
   fullName: string
   mobileNo: string
   email: string
@@ -27,6 +31,7 @@ interface UserType {
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserType>({
+    _id: "",
     fullName: "",
     mobileNo: "",
     email: "",
@@ -52,7 +57,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   const LogOutUser = async () => {
     try {
-      await axios.get("/api/logout")
+      await axios.get("/api/auth/logout")
       toast.success("Logout successful")
       router.push("/login")
     } catch (error) {
@@ -62,7 +67,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     async function getUserData() {
-      const res = await axios.get("/api/me")
+      const res = await axios.get("/api/auth/me")
       setUser(res.data.data)
     }
     getUserData()
@@ -103,8 +108,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 </Link>
 
                 <Link
-                  href="/dashboard/worker/add-order"
-                  className={menuClass("/dashboard/worker/add-order")}
+                  href="/dashboard/worker/order"
+                  className={menuClass("/dashboard/worker/order")}
                 >
                   <Plus />
                   <span>Add Order</span>
@@ -168,7 +173,36 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       {/* MAIN AREA */}
       <div className="main-area w-[80%] p-2">
         <div className="area-container bg-gray-950/90 rounded-2xl w-full h-full p-4">
+          
+          <div className="header border-b-gray-400 border-b p-2 w-full ">
+            <div className="topbar-container flex justify-between ">
+              <div className="first flex gap-2 items-center  border-gray-400 border rounded-sm p-2 h-12">
+                <div className="search-icon p-2"><Search /></div> 
+                <input type="text" placeholder="Search.. " className=" h-10"/>
+              </div>
+              <div className="second-wrapper flex  gap-4 items-center ">
+                  <div className="second">
+                    <Bell />
+                  </div>
+                  <div className="third flex items-center gap-2">
+                    <div className="pfp">
+                      <div className="w-10 h-10 bg-gray-400 rounded-full"></div>
+                    </div>
+                    <div className="">
+                      <h1 className="text-lg ">{user.fullName}</h1>
+                      <h2 className="text-text-secondary  ">{user.email}</h2>
+                    </div>
+                  </div>
+              </div>
+             
+            </div>
+          </div>
+
+
+         <UserContext.Provider value={user}> 
           {children}
+          </UserContext.Provider>
+
         </div>
       </div>
     </main>

@@ -74,7 +74,7 @@ const addUser: React.FC<Props> = ({  }) => {
   const addUser = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault(); 
-      const res = await axios.post('/api/signup', user);
+      const res = await axios.post('/api/auth/signup', user);
       setWorker(prev => ([...prev, user]))
       console.log(res);
       toast.dismissAll();

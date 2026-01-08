@@ -5,7 +5,7 @@ export default function Component() {
   const loggedUser = useUser()
 
   return (
-    <div className="w-full h-full flex  p-6 ">
+    <div className="w-full  flex  p-6 ">
       <div className="relative w-full rounded-2xl border border-gray-700/60 
                       bg-gradient-to-br from-[#0b0f1a]/80 to-[#0f172a]/80 
                       backdrop-blur-xl shadow-[0_0_40px_rgba(0,0,0,0.6)] p-6">

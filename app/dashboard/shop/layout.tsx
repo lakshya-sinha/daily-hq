@@ -28,6 +28,7 @@ import ScrollFix from "@/components/Dashboard/utils/ScrollFix";
 
 
 interface User {
+  _id: string;
   fullName: string;
   mobileNo: string;
   email: string;
@@ -41,6 +42,7 @@ interface User {
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
  const [user, setUser ] = useState<User>({
+    _id: "",
     fullName: "",
     mobileNo: "",
     email: "",
@@ -67,7 +69,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
     const LogOutUser = async () => {
         try {
-            const logoutData = await axios.get('/api/logout'); 
+            const logoutData = await axios.get('/api/auth/logout'); 
             toast.success('logout successfull');
             router.push('/login');
         } catch (error) {
@@ -77,7 +79,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
       async function getUserData(){
-        const userData = await axios.get('/api/me');
+        const userData = await axios.get('/api/auth/me');
         const realData = userData.data.data;
         setUser(realData);
       }
@@ -124,9 +126,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   <span>Products</span>
                 </Link>
 
-                <Link href="/dashboard/shop/add-user" className={menuClass("/dashboard/shop/add-user")}>
+                <Link href="/dashboard/shop/users" className={menuClass("/dashboard/shop/users")}>
                   <UserPlus />
-                  <span>Add User</span>
+                  <span> User</span>
                 </Link>
 
                 <Link href="/dashboard/shop/billing" className={menuClass("/dashboard/shop/billing")}>

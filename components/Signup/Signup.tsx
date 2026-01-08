@@ -41,7 +41,7 @@ const Signup = () => {
       try{
         toast.loading('registering...')
 
-        const response = await axios.post('/api/signup', user);
+        const response = await axios.post('/api/auth/signup', user);
         console.log('signup success', response.data);
         router.push('/login');
 

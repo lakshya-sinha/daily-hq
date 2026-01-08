@@ -22,7 +22,6 @@ export async function POST(request: NextRequest){
             }
         })
 
-        console.log("freshData", freshData) 
 
         if(!data) {
             return NextResponse.json({success: false, message: 'worker not found'}, {status: 200});

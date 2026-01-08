@@ -34,7 +34,7 @@ const Login = () => {
   const LoginUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/login', user);
+      const response = await axios.post('/api/auth/login', user);
       toast.success(response.data.message);
       router.push('/dashboard')
     } catch (error: unknown) {

@@ -9,7 +9,7 @@ const Page = () => {
   useEffect( () => {
     let isOwner;
     async function getDels(){
-      const response = await axios.get('/api/me');
+      const response = await axios.get('/api/auth/me');
       const data = response.data.data;
       console.log(response.data.data)
       isOwner = data.isOwner;
