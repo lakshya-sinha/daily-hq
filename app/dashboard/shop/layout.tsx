@@ -24,7 +24,12 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { UserContext } from "@/context/UserContext";
 import ScrollFix from "@/components/Dashboard/utils/ScrollFix";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Daily HQ | Dashboard - Shop Owner",
+  description: "you can manage your business through this page",
+};
 
 
 interface User {

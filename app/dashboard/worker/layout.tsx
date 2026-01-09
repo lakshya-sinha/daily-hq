@@ -18,6 +18,12 @@ import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import axios from "axios"
 import { UserContext } from "@/context/UserContext"
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Daily HQ | Dashboard - Worker",
+  description: "you can manage orders and do worker work  through this page",
+};
 
 interface UserType {
   _id: string
