@@ -171,7 +171,7 @@ const page = () => {
             >
               <option value="">-- Select Status --</option>
               <option value="success">Success</option>
-              <option value="dues">Dues</option>
+              <option value="pending">Pending</option>
             </select>
           </div>
 

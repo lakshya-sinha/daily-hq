@@ -3,29 +3,27 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { UsersRound, Pencil, Trash } from "lucide-react";
+import { Pencil, Trash } from "lucide-react";
 import { useUser } from "@/context/UserContext";
+import ExportExcelButton from "@/components/Dashboard/ExportOrderData";
 
-
-
-interface Props {}
-
-const Order: React.FC<Props> = () => {
-
+const Order = () => {
   const loggedUser = useUser();
 
-  const [order, setOrder] = useState<any[]>([]);
+  const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // filters
+  /* ================= Filters ================= */
   const [filterType, setFilterType] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+  const [workerName, setWorkerName] = useState("");
+  const [status, setStatus] = useState("");
 
-  // pagination
+  /* ================= Pagination ================= */
   const [page, setPage] = useState(1);
   const limit = 5;
 
-  // format date
+  /* ================= Date Formatter ================= */
   function getDate(iso: string) {
     const date = new Date(iso);
     return (
@@ -33,59 +31,69 @@ const Order: React.FC<Props> = () => {
       String(date.getDate()).padStart(2, "0") + "/" +
       date.getFullYear() + " " +
       String(date.getHours()).padStart(2, "0") + ":" +
-      String(date.getMinutes()).padStart(2, "0") + ":" +
-      String(date.getSeconds()).padStart(2, "0")
+      String(date.getMinutes()).padStart(2, "0")
     );
   }
 
-  // fetch orders
-    async function fetchOrder() {
-      try {
-        if (!loggedUser?.shopName) return; // ⛔ wait till user loads
+  /* ================= Fetch Orders ================= */
+  async function fetchOrders() {
+    try {
+      if (!loggedUser?.shopName) return;
 
-        setLoading(true);
+      setLoading(true);
 
-        const params: any = {
-          page,
-          limit,
-          shopName: loggedUser.shopName, // 🔑 SEND SHOP NAME
-        };
+      const params: any = {
+        page,
+        limit,
+        shopName: loggedUser.shopName,
+      };
 
-        if (filterType === "today") {
-          params.type = "date";
-          params.date = new Date().toISOString().split("T")[0];
-        }
-
-        if (filterType === "week") {
-          params.type = "days";
-          params.days = 7;
-        }
-
-        if (filterType === "month") {
-          params.type = "days";
-          params.days = 30;
-        }
-
-        if (filterType === "date" && selectedDate) {
-          params.type = "date";
-          params.date = selectedDate;
-        }
-
-        const res = await axios.get("/api/worker/order/fetch", { params });
-        setOrder(res.data.data);
-        console.log(res.data.data);
-
-      } catch (error) {
-        toast.error("Unable to fetch orders");
-      } finally {
-        setLoading(false);
+      /* Date Filters */
+      if (filterType === "today") {
+        params.type = "date";
+        params.date = new Date().toISOString().split("T")[0];
       }
-    }
 
+      if (filterType === "week") {
+        params.type = "days";
+        params.days = 7;
+      }
+
+      if (filterType === "month") {
+        params.type = "days";
+        params.days = 30;
+      }
+
+      if (filterType === "date" && selectedDate) {
+        params.type = "date";
+        params.date = selectedDate;
+      }
+
+      /* Worker Filter */
+      if (workerName) {
+        params.workerName = workerName;
+      }
+
+      /* Status Filter */
+      if (status) {
+        params.status = status;
+      }
+
+      const res = await axios.get("/api/admin/order/fetch", { params });
+      setOrders(res.data.data);
+
+      console.log(res.data.data);
+
+    } catch (error) {
+      toast.error("Unable to fetch orders");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    fetchOrder();
-  }, [filterType, selectedDate, page, loggedUser]);
+    fetchOrders();
+  }, [filterType, selectedDate, page, loggedUser, workerName, status]);
 
   return (
     <>
@@ -93,21 +101,11 @@ const Order: React.FC<Props> = () => {
 
       <div className="user-container mt-4">
 
-        {/* Title */}
-        {/* <div
-          className="title-container text-xl flex gap-2 items-center 
-          border border-white/10 
-          bg-gradient-to-r from-black/60 to-black/30
-          backdrop-blur-md
-          rounded-xl px-4 py-3 mb-3
-          text-white shadow-lg"
-        >
-          <UsersRound />
-          <h1>All Orders</h1>
-        </div> */}
+        {/* ================= Filters ================= */}
+        <div className="flex gap-3 mb-4 flex-wrap justify-between">
 
-        {/* Filters */}
-        <div className="flex gap-4 mb-4 items-center ">
+        <div className="first-row flex gap-2">
+          {/* Date Range */}
           <select
             className="bg-black border border-white/10 text-white px-3 py-2 rounded"
             value={filterType}
@@ -134,34 +132,50 @@ const Order: React.FC<Props> = () => {
               }}
             />
           )}
+
+          {/* Worker Search */}
+          <input
+            type="text"
+            placeholder="Search worker"
+            value={workerName}
+            onChange={(e) => {
+              setWorkerName(e.target.value);
+              setPage(1);
+            }}
+            className="bg-black border border-white/10 text-white px-3 py-2 rounded"
+          />
+
+          {/* Status */}
+          <select
+            className="bg-black border border-white/10 text-white px-3 py-2 rounded"
+            value={status}
+            onChange={(e) => {
+              setStatus(e.target.value);
+              setPage(1);
+            }}
+          >
+            <option value="">All Status</option>
+            <option value="success">Success</option>
+            <option value="pending">Pending</option>
+          </select>
+        </div>
+          <div className="second-row">
+            <ExportExcelButton data={orders} />
+          </div>
+
         </div>
 
-        {/* Table */}
-        <div
-          className="
-            relative overflow-x-auto
-            bg-black/40 backdrop-blur-lg
-            border border-white/10
-            rounded-2xl
-            shadow-[0_0_40px_rgba(0,0,0,0.6)]
-          "
-        >
-          <table className="w-full text-sm text-left text-gray-200 text-xs">
-            <thead
-              className="
-                text-sm text-gray-300
-                bg-black/60 backdrop-blur
-                border-b border-white/10
-              "
-            >
+        {/* ================= Table ================= */}
+        <div className="relative overflow-x-auto bg-black/40 backdrop-blur-lg border border-white/10 rounded-2xl">
+          <table className="w-full text-xs text-left text-gray-200">
+            <thead className="bg-black/60 border-b border-white/10">
               <tr>
-                <th className="px-6 py-3 text-xs">Name</th>
-                <th className="px-6 py-3 text-xs">Type</th>
-                <th className="px-6 py-3 text-xs">Worker</th>
-                <th className="px-6 py-3 text-xs">Prices</th>
-                <th className="px-6 py-3 text-xs">Status</th>
-                <th className="px-6 py-3 text-xs">Date</th>
-                <th className="px-6 py-3 text-xs">Operations</th>
+                <th className="px-6 py-3">Product</th>
+                <th className="px-6 py-3">Worker</th>
+                <th className="px-6 py-3">Prices</th>
+                <th className="px-6 py-3">Status</th>
+                <th className="px-6 py-3">Date</th>
+                <th className="px-6 py-3">Actions</th>
               </tr>
             </thead>
 
@@ -172,42 +186,28 @@ const Order: React.FC<Props> = () => {
                     Loading...
                   </td>
                 </tr>
-              ) : order.length > 0 ? (
-                order.map((value, index) => (
+              ) : orders.length ? (
+                orders.map((o, i) => (
                   <tr
-                    key={index}
-                    className="
-                      bg-transparent
-                      border-b border-white/5
-                      hover:bg-white/5
-                      transition-colors
-                    "
+                    key={i}
+                    className="border-b border-white/5 hover:bg-white/5"
                   >
-                    <td className="px-6 py-4 text-white">
-                      {value.name}
-                    </td>
-                    <td className="px-6 py-4 text-white">
-                      {value.product?.name}
-                    </td>
+                    <td className="px-6 py-4">{o.product?.name}</td>
+                    <td className="px-6 py-4">{o.worker?.fullName}</td>
                     <td className="px-6 py-4">
-                      {value.worker?.fullName}
-                    </td>
-                    <td className="px-6 py-4">
-                      CP: {value.product?.cp}, SP: {value.product?.sp}
+                      CP: {o.product?.cp}, SP: {o.product?.sp}
                     </td>
                     <td
                       className={`px-6 py-4 font-semibold ${
-                        value.status === "success"
+                        o.status === "success"
                           ? "text-blue-400"
-                          : value.status === "pending"
-                          ? "text-red-400"
-                          : ""
+                          : "text-red-400"
                       }`}
                     >
-                      {value.status}
+                      {o.status}
                     </td>
                     <td className="px-6 py-4">
-                      {getDate(value.createdAt)}
+                      {getDate(o.createdAt)}
                     </td>
                     <td className="px-6 py-4 flex gap-3">
                       <Pencil className="text-blue-300 cursor-pointer" />
@@ -226,11 +226,11 @@ const Order: React.FC<Props> = () => {
           </table>
         </div>
 
-        {/* Pagination */}
+        {/* ================= Pagination ================= */}
         <div className="flex justify-end gap-3 mt-4">
           <button
             disabled={page === 1}
-            onClick={() => setPage((p) => p - 1)}
+            onClick={() => setPage(p => p - 1)}
             className="px-4 py-2 bg-black border border-white/10 text-white rounded disabled:opacity-40"
           >
             Prev
@@ -241,7 +241,7 @@ const Order: React.FC<Props> = () => {
           </span>
 
           <button
-            onClick={() => setPage((p) => p + 1)}
+            onClick={() => setPage(p => p + 1)}
             className="px-4 py-2 bg-black border border-white/10 text-white rounded"
           >
             Next
