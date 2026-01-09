@@ -40,7 +40,7 @@ const Login = () => {
     } catch (error: unknown) {
       toast.dismissAll();
       if (error instanceof Error) {
-        toast.error(error.response.data.error);
+        toast.error(error.message);
       } else {
         toast.error("Cannot login, unknown error")
       }
