@@ -1,10 +1,10 @@
-'use client';
+'use client'
 import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import toast, { Toaster } from "react-hot-toast";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {Eye, EyeOff} from 'lucide-react';
 
 interface User {
@@ -14,17 +14,10 @@ interface User {
 
 const Login = () => {
 
-  const searchParams = useSearchParams()
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    const error = searchParams.get('error')
-    if (error === 'unauthorized') {
-      toast.error('Unauthorized access')
-    }
-  }, [searchParams])
 
   const [user, setUser] = useState<User>({
     email: "",

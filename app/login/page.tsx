@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 const page = () => {
   return (
-    <Suspense fallback={null}>
+    <div>
       <Login />
-    </Suspense>
+    </div>
   )
 }
 
