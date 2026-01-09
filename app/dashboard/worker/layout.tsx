@@ -9,6 +9,7 @@ import {
   Plus,
   Search,
   Bell,
+  CreditCard
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -114,6 +115,15 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   <Plus />
                   <span>Add Order</span>
                 </Link>
+
+                <Link
+                  href="/dashboard/worker/expense"
+                  className={menuClass("/dashboard/worker/expense")}
+                >
+                  <CreditCard />
+                  <span>Add Expense</span>
+                </Link>
+
               </div>
             </div>
 

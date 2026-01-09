@@ -15,9 +15,13 @@ const OrderSchema = new mongoose.Schema({
     required: true
   },
 
+  name: {
+    type: String,
+  },
+
   status: {
     type: String,
-    enum: ["dues", "success"],
+    enum: ["pending", "success"],
     default: "dues"
   }
   

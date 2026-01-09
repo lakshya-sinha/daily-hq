@@ -9,15 +9,16 @@ export async function POST(request: NextRequest){
         
         const reqBody =  await request.json();
 
-        const {product, worker, status} = reqBody;
+        const {product, worker, status, name} = reqBody;
 
         const newOrder = new Order({
             product, 
             worker, 
+            name,
             status
         })
 
-        const savedOrder = newOrder.save();
+        const savedOrder = await newOrder.save();
 
         return NextResponse.json({success: true, message: 'order added successfully'}, {status: 200})
 

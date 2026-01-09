@@ -8,7 +8,7 @@ export async function POST(request: NextRequest){
     try {
         
       const reqBody = await request.json();
-      const {name, cp, sp, mv}   = reqBody;
+      const {name, cp, sp, mv, user}   = reqBody;
 
       const Isproduct = await Product.findOne({name});
 
@@ -23,6 +23,7 @@ export async function POST(request: NextRequest){
         cp, 
         sp, 
         mv,
+        user
       })
 
       const savedProduct = await newProduct.save();

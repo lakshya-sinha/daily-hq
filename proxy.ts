@@ -13,8 +13,19 @@ export async function proxy(request: NextRequest) {
 
   const isPublicPath = path === '/login' || path === '/signup' || path === '/'
   const token = request.cookies.get('token')?.value || '';
-  if(token !== ''){
-    const userId = await getDataFromToken(request);
+
+
+    if(!token || token == '' ){
+        // return NextResponse.redirect(new URL('/dashboard', request.nextUrl))
+    }
+
+ 
+
+
+
+  if(token !== '' || token){
+
+     const userId = await getDataFromToken(request);
     const user = await User.findById(userId).select("-password -_id -__v")
 
     // if user is worker and trying to go admin url 
@@ -45,6 +56,7 @@ export async function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     '/',
+    '/dashboard',
     '/dashboard/:path*',
     '/login',
     '/signup'

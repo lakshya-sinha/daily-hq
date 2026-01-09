@@ -17,10 +17,11 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'please provide product market value']
     }, 
-    status: {
-        type: String,
-        enum: ["dues", "success"]
-    }
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",   
+        required: true
+    },
 }, {timestamps: true});
 
 const Product = mongoose.models.products || mongoose.model("products", ProductSchema);

@@ -89,16 +89,16 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="bg-[url('/images/dashboard/background.png')] w-full h-screen bg-cover text-white  flex">
       {/* SIDEBAR */}
-      <div className="sidebar w-[20%] p-2 h-screen">
+      <div className="sidebar w-[40%] lg:w-[20%]  lg:p-2 h-screen">
         <div className="sidebar-container p-4 h-full flex flex-col justify-between bg-gray-950/25 rounded-2xl ">
 
           {/* LOGO */}
           <div className="border border-gray-700 bg-gray-800/50 rounded-2xl p-2">
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col lg:flex-row items-center gap-3">
               <Image src="/images/landing/logo.png" width={40} height={40} alt="Logo" loading="eager"   className="w-10 h-10"/>
               <div>
-                <h1 className="text-xl">Daily HQ</h1>
-                <p className="text-text-secondary text-sm">Analytics Dashboard</p>
+              <h1 className="text-xs lg:text-xl">Daily HQ</h1>
+                <p className="text-text-secondary text-xs">Analytics Dashboard</p>
               </div>
             </div>
           </div>
@@ -108,78 +108,78 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
             {/* MAIN MENU */}
             <div>
-              <h2 className="text-text-secondary mb-2">MAIN MENU</h2>
+              <h2 className="text-text-secondary mb-2 text-sm lg:text-sm">MAIN MENU</h2>
 
               <div className="flex flex-col gap-1">
                 <Link href="/dashboard/shop" className={menuClass("/dashboard/shop")}>
                   <LayoutDashboard />
-                  <span>Dashboard</span>
+                  <span className="hidden lg:block">Dashboard</span>
                 </Link>
 
                 <Link href="/dashboard/shop/orders" className={menuClass("/dashboard/shop/orders")}>
                   <NotebookText />
-                  <span>Orders</span>
+                  <span className="hidden lg:block">Orders</span>
                 </Link>
 
                 <Link href="/dashboard/shop/products" className={menuClass("/dashboard/shop/products")}>
                   <ShoppingCart />
-                  <span>Products</span>
+                  <span className="hidden lg:block">Products</span>
                 </Link>
 
                 <Link href="/dashboard/shop/users" className={menuClass("/dashboard/shop/users")}>
                   <UserPlus />
-                  <span> User</span>
+                  <span className="hidden lg:block"> User</span>
                 </Link>
 
-                <Link href="/dashboard/shop/billing" className={menuClass("/dashboard/shop/billing")}>
+                <Link href="/dashboard/shop/expenses" className={menuClass("/dashboard/shop/expenses")}>
                   <CreditCard />
-                  <span>Billing</span>
+                  <span className="hidden lg:block">Expenses</span>
                 </Link>
 
                 <Link href="/dashboard/shop/customers" className={menuClass("/dashboard/shop/customers")}>
                   <Users />
-                  <span>Customers</span>
+                  <span className="hidden lg:block">Customers</span>
                 </Link>
               </div>
             </div>
 
             {/* ACCOUNT */}
             <div>
-              <h2 className="text-text-secondary mb-2">ACCOUNT</h2>
+              <h2 className="text-text-secondary mb-2 text-sm lg:text-sm">ACCOUNT</h2>
 
               <div className="flex flex-col gap-1">
                 <Link href="/dashboard/shop/account" className={menuClass("/dashboard/shop/account")}>
                   <User />
-                  <span>My Account</span>
+                  <span className="hidden lg:block">My Account</span>
                 </Link>
 
                 <Link href="/dashboard/shop/help" className={menuClass("/dashboard/shop/help")}>
                   <HandHelping />
-                  <span>Get Help</span>
+                  <span className="hidden lg:block">Get Help</span>
                 </Link>
 
                 <Link href="/dashboard/shop/settings" className={menuClass("/dashboard/shop/settings")}>
                   <Settings />
-                  <span>Settings</span>
+                  <span className="hidden lg:block">Settings</span>
                 </Link>
               </div>
             </div>
 
             {/* LOGOUT */}
             <div className="border-t border-gray-700 pt-3">
-              <button className="menu-box flex gap-1 p-2 text-red-400 hover:bg-red-500/10 rounded-lg w-full cursor-pointer" onClick={() => {LogOutUser()}}>  
+              <button className="menu-box flex gap-1 items-center p-2 text-red-400 hover:bg-red-500/10 rounded-lg w-full cursor-pointer" onClick={() => {LogOutUser()}}>  
                 <LogOut />
-                <span>Log Out</span>
+                <span className="hidden lg:block">Log Out</span>
               </button>
             </div>
           </div>
 
           {/* USER INFO */}
-          <div className="flex items-center gap-2 p-2 bg-gray-800/40 rounded-xl">
+          <div className="flex items-center gap-2 p-2 bg-gray-800/40 rounded-xl hidden lg:flex">
             <Image src="/images/landing/logo.png" width={40} height={40} alt="User" />
-            <div>
+            <div className="hidden lg:block">
               <h1 className="text-sm">{user.fullName}</h1>
-              <p className="text-text-secondary text-xs">{user.email}</p>
+              <p className="text-text-secondary  lg:text-sm">{user.email}</p>
             </div>
           </div>
 
@@ -187,16 +187,16 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       {/* MAIN AREA */}
-      <div className="main-area w-[80%] h-screen ">
+      <div className="main-area w-[70%] lg:w-[80%] h-screen ">
         <div className="area-container bg-gray-950/90 rounded-2xl w-full h-full flex flex-col p-2">
          <div className="header border-b-gray-400 border-b p-2 w-full ">
             <div className="topbar-container flex justify-between ">
-              <div className="first flex gap-2 items-center  border-gray-400 border rounded-sm p-2 h-12">
+              <div className="first flex gap-2 items-center  border-gray-400 border rounded-sm p-2 h-12 hidden lg:flex">
                 <div className="search-icon p-2"><Search /></div> 
                 <input type="text" placeholder="Search.. " className=" h-10"/>
               </div>
               <div className="second-wrapper flex  gap-4 items-center ">
-                  <div className="second">
+                  <div className="second hidden lg:block">
                     <Bell />
                   </div>
                   <div className="third flex items-center gap-2">
@@ -204,8 +204,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                       <div className="w-10 h-10 bg-gray-400 rounded-full"></div>
                     </div>
                     <div className="">
-                      <h1 className="text-lg ">{user.fullName}</h1>
-                      <h2 className="text-text-secondary  ">{user.email}</h2>
+                      <h1 className="text-lg text-xs lg:text-sm">{user.fullName}</h1>
+                      <h2 className="text-text-secondary  text-xs lg:text-sm">{user.email}</h2>
                     </div>
                   </div>
               </div>
@@ -214,7 +214,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
 
               <UserContext.Provider value={user}> 
-                  <div className="flex-1 min-h-0">
+                  <div className="flex-1 overflow-scroll lg:overflow-auto">
                     <ScrollFix>
                       {children}
                     </ScrollFix>

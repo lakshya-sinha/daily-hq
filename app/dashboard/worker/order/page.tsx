@@ -12,6 +12,7 @@ interface Order {
   product: string
   worker: string
   status: string
+  name: string
 }
 
 interface Product {
@@ -34,6 +35,7 @@ const page = () => {
     product: "",
     worker: "",
     status: "",
+    name: "",
   })
 
   /* ================= Fetch Products ================= */
@@ -41,14 +43,16 @@ const page = () => {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await axios.get("/api/admin/product/fetch")
+        const res = await axios.get("/api/admin/product/fetch", {
+                                    params: { centerName: loggedUser.shopName }
+                                  })
         setProducts(res.data.data)
       } catch (err) {
         toast.error("Failed to fetch products")
       }
     }
     fetchProducts()
-  }, [])
+  }, [loggedUser])
 
   /* ================= Set Worker ================= */
 
@@ -73,6 +77,7 @@ const page = () => {
         ...prev,
         product: "",
         status: "",
+        name: "",
       }))
 
     } catch (error) {
@@ -132,6 +137,22 @@ const page = () => {
                 </option>
               ))}
             </select>
+          </div>
+
+              {/* order name  */}
+            <div className="flex flex-col gap-1">
+            <label className="text-sm text-white/80">Order Name</label>
+            <input
+              placeholder="name"
+              onChange={(e) =>
+                setOrder(prev => ({
+                  ...prev,
+                  name: e.target.value,
+                  status: prev.status || "success",
+                }))
+              }
+              className="bg-black/60 border border-white/10 rounded-xl px-3 py-2"
+            />
           </div>
 
           {/* Status Select */}
