@@ -1,5 +1,6 @@
 import Login from "@/components/Login/Login"
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Daily HQ | Login",
@@ -9,9 +10,9 @@ export const metadata: Metadata = {
 
 const page = () => {
   return (
-    <div>
+    <Suspense fallback={null}>
       <Login />
-    </div>
+    </Suspense>
   )
 }
 
