@@ -22,7 +22,7 @@ const ProductEfficiencyChart = ({ data }: ProductEfficiencyChartProps) => {
       <BarChart data={data}>
         <XAxis
           dataKey="name"
-          tick={{ fill: "#6dfe6bff", fontSize: 12 }}
+          tick={{ fill: "#6dfe6bff", fontSize: 12, display: 'none' }}
           axisLine={false}
           tickLine={false}
         />
