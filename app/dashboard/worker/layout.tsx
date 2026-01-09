@@ -17,6 +17,7 @@ import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import axios from "axios"
 import { UserContext } from "@/context/UserContext"
+import ScrollFix from "@/components/Dashboard/utils/ScrollFix"
 
 
 interface UserType {
@@ -77,7 +78,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   return (
-    <main className="bg-[url('/images/dashboard/background.png')] w-full h-screen text-white flex relative overflow-hidden">
+    <main className="bg-[url('/images/dashboard/background.png')]  w-full h-screen text-white flex relative overflow-hidden">
 
       {/* OVERLAY */}
       {isSidebarOpen && (
@@ -167,7 +168,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
       {/* MAIN AREA */}
       <div className="w-full lg:w-[80%] p-2">
-        <div className="bg-gray-950/90 rounded-2xl w-full h-full p-4">
+        <div className="bg-gray-950/90 rounded-2xl w-full h-full p-4 mb-8">
 
           {/* HEADER */}
           <div className="border-b border-gray-400 p-2">
@@ -191,7 +192,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 </div>
               </div>
 
-              <div className="flex gap-4 items-center justify-end">
+              <div className="flex gap-4 items-center justify-end hidden lg:flex">
                 <Bell />
                 <div>
                   <h1 className="text-lg">{user.fullName}</h1>
@@ -205,7 +206,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
 
           <UserContext.Provider value={user}>
-            {children}
+            <div className="flex-1  lg:overflow-auto w-full h-full ">
+                    <ScrollFix>
+                      {children}
+                    </ScrollFix>
+            </div>
           </UserContext.Provider>
 
         </div>
