@@ -59,7 +59,7 @@ export default function ExportExcelButton({ data }: { data: Order[] }) {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
 
-    saveAs(blob, `orders-${Date.now()}.xlsx`);
+    saveAs(blob, `orders-report-${Date.now()}.xlsx`);
   };
 
   return (

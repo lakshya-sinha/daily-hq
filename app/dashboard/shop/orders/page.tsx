@@ -1,11 +1,11 @@
 'use client'
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { Pencil, Trash } from "lucide-react";
 import { useUser } from "@/context/UserContext";
 import ExportExcelButton from "@/components/Dashboard/ExportOrderData";
+
 
 const Order = () => {
   const loggedUser = useUser();
@@ -90,6 +90,27 @@ const Order = () => {
       setLoading(false);
     }
   }
+
+  /* ================= Delete Orders ================= */
+  const deleteOrder = async (deleteOrderId: string)=>{
+    try {
+      const res = await axios.delete('/api/admin/order/delete', {
+        params: {
+          OrderId: deleteOrderId
+        }
+      }) 
+      console.log(res);
+      toast.success(res.data.message);
+      fetchOrders();
+    } catch (error: unknown) {
+     if(error instanceof Error){
+        toast.error(error.message);
+     } 
+        toast.error('unable delete order');
+    }
+  }
+
+
 
   useEffect(() => {
     fetchOrders();
@@ -211,7 +232,7 @@ const Order = () => {
                     </td>
                     <td className="px-6 py-4 flex gap-3">
                       <Pencil className="text-blue-300 cursor-pointer" />
-                      <Trash className="text-red-400 cursor-pointer" />
+                      <Trash className="text-red-400 cursor-pointer" onClick={()=>{deleteOrder(o._id)}}/>
                     </td>
                   </tr>
                 ))

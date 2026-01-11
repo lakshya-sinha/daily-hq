@@ -29,11 +29,6 @@ const Page = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [days, setDays] = useState<number>(30); 
 
-  /* ---------------- Fetch Products ---------------- */
-  useEffect(() => {
-    if (!loggedUser?._id || !loggedUser?.shopName) return;
-
-    setProduct(prev => ({ ...prev, user: loggedUser._id }));
 
     async function fetchProducts() {
       try {
@@ -49,6 +44,12 @@ const Page = () => {
       }
     }
 
+  /* ---------------- Fetch Products ---------------- */
+  useEffect(() => {
+    if (!loggedUser?._id || !loggedUser?.shopName) return;
+
+    setProduct(prev => ({ ...prev, user: loggedUser._id }));
+
     fetchProducts();
   }, [loggedUser, days]);
 
@@ -59,10 +60,29 @@ const Page = () => {
       const res = await axios.post("/api/admin/product/add", product);
       toast.success(res.data.message);
       setProducts(prev => [...prev, product]);
+      fetchProducts();
     } catch {
       toast.error("Unable to add product");
     }
   };
+
+  const deleteProduct = async (deleteProductId: string) => {
+    try {
+     const res = await axios.delete('/api/admin/product/delete', {
+      params: {
+        productId:  deleteProductId
+      }
+     });
+     console.log(res);
+     toast.success(res.data.message);
+     fetchProducts();
+    } catch (error: unknown) {
+      if(error instanceof Error){
+        toast.error(error.message);
+      }
+      console.log(error);
+    }
+  }
 
   return (
     <div className="add-user-container mt-4 p-2">
@@ -146,7 +166,7 @@ const Page = () => {
                     </td>
                     <td className="px-6 py-4 flex gap-3">
                       <Pencil className="text-blue-400 cursor-pointer" />
-                      <Trash className="text-red-400 cursor-pointer" />
+                      <Trash className="text-red-400 cursor-pointer" onClick={()=> {deleteProduct(p._id || "")}}/>
                     </td>
                   </tr>
                 ))

@@ -7,10 +7,14 @@ connect();
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams;
+    const { searchParams } = request.nextUrl;
 
-    const days = Number(searchParams.get("days")) || 30;
+    const type = searchParams.get("type"); // date | days
+    const date = searchParams.get("date");
+    const days = searchParams.get("days");
     const shopName = searchParams.get("shopName");
+
+    const workerName = searchParams.get("workerName"); // optional
 
     if (!shopName) {
       return NextResponse.json(
@@ -19,14 +23,37 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    /* 📅 Date filter */
-    const fromDate = new Date();
-    fromDate.setDate(fromDate.getDate() - days);
+    /* ================= DATE FILTER ================= */
 
-    /* ================= INCOME (Orders) ================= */
+    let dateFilter: any = {};
+
+    if (type === "date" && date) {
+      const start = new Date(date);
+      start.setHours(0, 0, 0, 0);
+
+      const end = new Date(date);
+      end.setHours(23, 59, 59, 999);
+
+      dateFilter = { $gte: start, $lte: end };
+    }
+
+    if (type === "days" && days) {
+      const fromDate = new Date();
+      fromDate.setDate(fromDate.getDate() - Number(days));
+      dateFilter = { $gte: fromDate };
+    }
+
+    /* ================= INCOME (ORDERS) ================= */
 
     const incomeResult = await Order.aggregate([
-      { $match: { createdAt: { $gte: fromDate } } },
+      ...(Object.keys(dateFilter).length
+        ? [{ $match: { createdAt: dateFilter } }]
+        : []),
+
+      // ...(status && ["success", "pending"].includes(status)
+      //   ? [{ $match: { status } }]
+      //   : []),
+
       {
         $lookup: {
           from: "products",
@@ -36,6 +63,7 @@ export async function GET(request: NextRequest) {
         },
       },
       { $unwind: "$product" },
+
       {
         $lookup: {
           from: "users",
@@ -45,12 +73,22 @@ export async function GET(request: NextRequest) {
         },
       },
       { $unwind: "$worker" },
-      { $match: { "worker.shopName": shopName } },
+
+      {
+        $match: {
+          "worker.shopName": shopName,
+          ...(workerName && {
+            "worker.fullName": { $regex: workerName, $options: "i" },
+          }),
+        },
+      },
+
       {
         $group: {
           _id: null,
           totalOrders: { $sum: 1 },
-          totalIncome: {
+          totalIncome: { $sum: "$product.sp" },
+          netIncome: {
             $sum: { $subtract: ["$product.sp", "$product.cp"] },
           },
         },
@@ -60,7 +98,10 @@ export async function GET(request: NextRequest) {
     /* ================= EXPENSE ================= */
 
     const expenseResult = await Expense.aggregate([
-      { $match: { createdAt: { $gte: fromDate } } },
+      ...(Object.keys(dateFilter).length
+        ? [{ $match: { createdAt: dateFilter } }]
+        : []),
+
       {
         $lookup: {
           from: "users",
@@ -70,7 +111,16 @@ export async function GET(request: NextRequest) {
         },
       },
       { $unwind: "$worker" },
-      { $match: { "worker.shopName": shopName } },
+
+      {
+        $match: {
+          "worker.shopName": shopName,
+          ...(workerName && {
+            "worker.fullName": { $regex: workerName, $options: "i" },
+          }),
+        },
+      },
+
       {
         $group: {
           _id: null,
@@ -83,18 +133,21 @@ export async function GET(request: NextRequest) {
 
     const totalOrders = incomeResult[0]?.totalOrders || 0;
     const totalIncome = incomeResult[0]?.totalIncome || 0;
+    const netIncome = incomeResult[0]?.netIncome || 0;
     const totalExpense = expenseResult[0]?.totalExpense || 0;
-    const netProfit = totalIncome - totalExpense;
+    const netProfit = netIncome - totalExpense;
 
     return NextResponse.json({
       success: true,
       totalOrders,
       totalIncome,
+      netIncome,
       totalExpense,
       netProfit,
     });
 
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       { success: false, message: "Failed to calculate analytics" },
       { status: 500 }

@@ -135,9 +135,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   <span className="hidden lg:block">Expenses</span>
                 </Link>
 
-                <Link href="/dashboard/shop/customers" className={menuClass("/dashboard/shop/customers")}>
+                <Link href="/dashboard/shop/analytics" className={menuClass("/dashboard/shop/analytics")}>
                   <Users />
-                  <span className="hidden lg:block">Customers</span>
+                  <span className="hidden lg:block">Analytics</span>
                 </Link>
               </div>
             </div>
@@ -178,7 +178,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             <Image src="/images/landing/logo.png" width={40} height={40} alt="User" />
             <div className="hidden lg:block">
               <h1 className="text-sm">{user.fullName}</h1>
-              <p className="text-text-secondary  lg:text-sm">{user.email}</p>
+              <p className="text-text-secondary   lg:text-xs">{user.email}</p>
             </div>
           </div>
 

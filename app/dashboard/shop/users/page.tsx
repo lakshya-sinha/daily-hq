@@ -8,6 +8,7 @@ import { useUser } from '@/context/UserContext'
 
 
 interface User {
+  _id?: string;
   fullName: string;
   mobileNo: string;
   email: string;
@@ -55,20 +56,16 @@ const addUser: React.FC<Props> = ({  }) => {
    
   }, [loggedUser])
 
-  useEffect(()=>{
-    if (!user.shopName) return;
-
-
-    async function getData(){
+  async function fetchUser(){
       const shopName = {shopName: user.shopName}
       const data = await axios.post('/api/admin/worker/fetch', shopName);
       const workerData = data.data.data;
       setWorker(workerData);
-    }
+  }
 
-
-    getData();
-
+  useEffect(()=>{
+    if (!user.shopName) return;
+    fetchUser();
   }, [user.shopName])
 
   const addUser = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -76,9 +73,9 @@ const addUser: React.FC<Props> = ({  }) => {
       e.preventDefault(); 
       const res = await axios.post('/api/auth/signup', user);
       setWorker(prev => ([...prev, user]))
-      console.log(res);
       toast.dismissAll();
       toast.success(res.data.message);
+      fetchUser();
     } catch (error: unknown) {
       if(error instanceof Error){
         toast.error(error.message); 
@@ -87,8 +84,25 @@ const addUser: React.FC<Props> = ({  }) => {
     }
   }
 
-  return (
+  const deleteUser = async (deleteUserId: string)=>{
+    try {
+      const res = await axios.delete('/api/admin/worker/delete', {
+        params: {
+          UserId: deleteUserId
+        }
+      })
+      toast.success(res.data.message);
+      console.log(res);
+      fetchUser();
+    } catch (error: unknown) {
+     if(error instanceof Error){
+      toast.error(error.message);
+     }
+     toast.error("unable to delete user")
+    }
+  }
 
+  return (
 
       <div className="add-user-container mt-4 p-2">
 
@@ -219,7 +233,8 @@ const addUser: React.FC<Props> = ({  }) => {
                 <td className="px-6 py-4">{value.address}</td>
                 <td className="px-6 py-4 flex items-center gap-3 text-sm">
                   <Pencil className="text-blue-300 hover:text-blue-400 transition cursor-pointer" />
-                  <Trash className="text-red-400 hover:text-red-500 transition cursor-pointer" />
+                  <Trash className="text-red-400 hover:text-red-500 transition cursor-pointer" onClick={()=>{deleteUser(value._id || "")}}/>
+                  <p>{value._id}</p>
                 </td>
               </tr>
             ))

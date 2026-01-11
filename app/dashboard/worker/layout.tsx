@@ -168,7 +168,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
       {/* MAIN AREA */}
       <div className="w-full lg:w-[80%] p-2">
-        <div className="bg-gray-950/90 rounded-2xl w-full h-full p-4 mb-8">
+        <div className="bg-gray-950/90 rounded-2xl w-full h-full p-4 mb-8 overflow-hidden">
 
           {/* HEADER */}
           <div className="border-b border-gray-400 p-2">
