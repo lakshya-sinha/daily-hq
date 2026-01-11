@@ -83,11 +83,11 @@ const Shop = () => {
     <>
          
           <div className="area2 p-3 grid  grid-cols-1 lg:grid-cols-4 gap-6 items-center justify-center">
-            <DelsBox data={monthlyProfit} stroke="green" icon={<Wallet />} label="Total Income" value={"₹ " + analytics.totalIncome } />
-            <DelsBox data={monthlyProfit} stroke="green" icon={<Wallet />} label="Net Income" value={"₹ " + analytics.netIncome } />
-            <DelsBox data={monthlyProfit} stroke="green" icon={<Wallet />} label="Net Profit" value={"₹ " + analytics.netProfit } />
-            <DelsBox data={monthlyProfit} stroke="rgba(103, 232, 249, 0.9)" icon={<ShoppingCart />} label="Total Orders" value={analytics.totalOrders} />
-            <DelsBox data={monthlyProfit} stroke="red" icon={<CreditCard />} label="Total Expenses" value={"₹ " + analytics.totalExpense} />
+            <DelsBox  stroke="green" icon={<Wallet />} label="Total Income" value={"₹ " + analytics.totalIncome } />
+            <DelsBox  stroke="green" icon={<Wallet />} label="Net Income" value={"₹ " + analytics.netIncome } />
+            <DelsBox  stroke="green" icon={<Wallet />} label="Net Profit" value={"₹ " + analytics.netProfit } />
+            <DelsBox  stroke="rgba(103, 232, 249, 0.9)" icon={<ShoppingCart />} label="Total Orders" value={analytics.totalOrders} />
+            <DelsBox  stroke="red" icon={<CreditCard />} label="Total Expenses" value={"₹ " + analytics.totalExpense} />
           </div>
 
 
