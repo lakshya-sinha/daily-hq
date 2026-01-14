@@ -107,9 +107,9 @@ export default function Page() {
         "
       >
         <div className="main-grid grid lg:grid-cols-2 h-full w-full">
-            <div className="first-grid ">
+            <div className="first-grid border">
 
-                <div className="title-container border-b flex items-center gap-2 justify-center p-4 text-lg">
+                <div className="title-container border-b flex bg-blue-400 items-center gap-2 justify-center p-4 text-lg">
                     <BanknoteArrowDown />
                     <h2>Currency Notes</h2>
                 </div>
@@ -229,9 +229,9 @@ export default function Page() {
 
 
             </div>
-            <div className="second-grid ">
+            <div className="second-grid border ">
 
-                <div className="title-container border-b flex items-center gap-2 justify-center p-4 text-lg">
+                <div className="title-container border-b bg-amber-400 flex items-center gap-2 justify-center p-4 text-lg">
                     <Coins />
                     <h2>Calculations</h2>
                 </div>
@@ -248,15 +248,16 @@ export default function Page() {
                     <h1>{totalAmountInWord}</h1>
                 </div>
 
-                <div className="button-container w-full mt-4 flex  justify-between pl-4 pr-4">
-                    <button className="border px-6 py-2">Save</button>
-                    <button className="border px-6 py-2" onClick={()=> {clearNotes()}}>Clear</button>
-                    <button className="border px-6 py-2">More</button>
+                <div className="button-container w-full mt-4 grid grid-cols-3 gap-2   pl-4 pr-4">
+                    <button className="border px-6 py-2 ">Save</button>
+                    <button className="border px-6 py-2 " onClick={()=> {clearNotes()}}>Clear</button>
+                    <button className="border px-6 py-2  ">More</button>
                 </div>
 
                 <div className="blank-space p-4"></div>
 
            </div>
+
         </div>
 
 
