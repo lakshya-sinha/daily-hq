@@ -18,10 +18,10 @@ const Order = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [workerName, setWorkerName] = useState("");
   const [status, setStatus] = useState("");
+  const [limit, setLimit] = useState(5);
 
   /* ================= Pagination ================= */
   const [page, setPage] = useState(1);
-  const limit = 5;
 
   /* ================= Date Formatter ================= */
   function getDate(iso: string) {
@@ -113,8 +113,9 @@ const Order = () => {
 
 
   useEffect(() => {
+    if(!loggedUser.shopName) return;
     fetchOrders();
-  }, [filterType, selectedDate, page, loggedUser, workerName, status]);
+  }, [filterType, selectedDate, page, loggedUser.shopName, workerName, status, limit]);
 
   return (
     <>
@@ -123,7 +124,7 @@ const Order = () => {
       <div className="user-container mt-4">
 
         {/* ================= Filters ================= */}
-        <div className="flex gap-3 mb-4 flex-wrap justify-between">
+        <div className="flex gap-3 mb-4 flex-wrap justify-between ">
 
         <div className="first-row flex gap-2">
           {/* Date Range */}
@@ -179,7 +180,26 @@ const Order = () => {
             <option value="success">Success</option>
             <option value="pending">Pending</option>
           </select>
+
+          {/* limit  */}
+          <select
+            className="bg-black border border-white/10 text-white px-3 py-2 rounded"
+            value={limit}
+            onChange={(e) => {
+              setLimit(Number(e.target.value));
+              setPage(1);
+            }}
+          >
+            <option value="5">5</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+          </select>
+
+
         </div>
+
           <div className="second-row">
             <ExportExcelButton data={orders} />
           </div>

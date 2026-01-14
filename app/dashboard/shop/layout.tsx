@@ -93,13 +93,15 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
           {/* LOGO */}
           <div className="border border-gray-700 bg-gray-800/50 rounded-2xl p-2">
-            <div className="flex flex-col lg:flex-row items-center gap-3">
-              <Image src="/images/landing/logo.png" width={40} height={40} alt="Logo" loading="eager"   className="w-10 h-10"/>
-              <div>
-              <h1 className="text-xs lg:text-xl">Daily HQ</h1>
-                <p className="text-text-secondary text-xs">Analytics Dashboard</p>
+            <Link href={'/dashboard'}>
+              <div className="flex flex-col lg:flex-row items-center gap-3">
+                <Image src="/images/landing/logo.png" width={40} height={40} alt="Logo" loading="eager"   className="w-10 h-10"/>
+                <div>
+                <h1 className="text-xs lg:text-xl">Daily HQ</h1>
+                  <p className="text-text-secondary text-xs">Analytics Dashboard</p>
+                </div>
               </div>
-            </div>
+            </Link>
           </div>
 
           {/* MENU */}

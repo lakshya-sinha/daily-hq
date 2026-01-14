@@ -1,6 +1,6 @@
 'use client';
 
-import { UserRoundPlus } from "lucide-react";
+import { BanknoteArrowDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
@@ -84,7 +84,7 @@ export default function Page() {
           text-white shadow-lg
         "
       >
-        <UserRoundPlus />
+        <BanknoteArrowDown />
         <h1>Add New Expense</h1>
       </div>
 

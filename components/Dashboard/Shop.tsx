@@ -32,11 +32,7 @@ const Shop = () => {
     totalExpense: 0
    })
 
-
-    useEffect(() => {
-    if (!loggedUser?.shopName) return;
-
-    async function fetchStats() {
+   async function fetchStats() {
       const res = await axios.get("/api/admin/product/fetch", {
         params: {
           centerName: loggedUser.shopName,
@@ -59,23 +55,13 @@ const Shop = () => {
       })
 
       setAnalytics(res2.data);
-      console.log(res2.data);
 
     }
 
-    fetchStats();
-  }, [loggedUser]);
-
-    const monthlyProfit = [
-      { value: 0 },
-      { value: 200 },
-      { value: 400 },
-      { value: 100 },
-      {value: 200},
-      { value: 100 },
-      { value: 300 },
-      { value: 200 },
-    ];
+    useEffect(() => {
+      if (!loggedUser?.shopName) return;
+      fetchStats();
+    }, [loggedUser]);
 
 
   return (

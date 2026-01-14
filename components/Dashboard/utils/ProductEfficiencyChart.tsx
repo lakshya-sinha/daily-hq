@@ -23,10 +23,10 @@ const ProductEfficiencyChart = ({ data }: ProductEfficiencyChartProps) => {
         <XAxis
           dataKey="name"
           tick={{ fill: "#6dfe6bff", fontSize: 12, display: 'none' }}
-          axisLine={false}
-          tickLine={false}
+          axisLine={true}
+          tickLine={true}
         />
-        <YAxis hide />
+         <YAxis />
         <Tooltip
           cursor={{ fill: "transparent" }}
           contentStyle={{

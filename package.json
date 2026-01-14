@@ -21,13 +21,15 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hot-toast": "^2.6.0",
-    "recharts": "^3.6.0"
+    "recharts": "^3.6.0",
+    "to-words": "^4.10.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/file-saver": "^2.0.7",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
+    "@types/number-to-words": "^1.2.3",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
