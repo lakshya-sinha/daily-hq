@@ -129,7 +129,7 @@ export default function Page() {
                                     onChange={(e) => updateNotes(500, e.target.value)}
                                 />
                             </div>
-                            <div className="nsip2s flex gap-2 bg-amber-800 ">
+                            <div className="nsip2s flex gap-2   ">
                                 <h2>₹</h2> <input disabled value={note[500].total} type="number" />
                             </div>
                         </div>
@@ -147,7 +147,7 @@ export default function Page() {
                                     onChange={(e) => updateNotes(200, e.target.value)}
                                 />
                             </div>
-                            <div className="nsip2s flex gap-2 bg-amber-800 ">
+                            <div className="nsip2s flex gap-2   ">
                                 <h2>₹</h2> <input disabled value={note[200].total} type="number" />
                             </div>
                         </div>
@@ -165,7 +165,7 @@ export default function Page() {
                                     onChange={(e) => updateNotes(100, e.target.value)}
                                 />
                             </div>
-                            <div className="nsip2s flex gap-2 bg-amber-800 ">
+                            <div className="nsip2s flex gap-2   ">
                                 <h2>₹</h2> <input disabled value={note[100].total} type="number" />
                             </div>
                         </div>
@@ -183,7 +183,7 @@ export default function Page() {
                                     onChange={(e) => updateNotes(50, e.target.value)}
                                 />
                             </div>
-                            <div className="nsip2s flex gap-2 bg-amber-800 ">
+                            <div className="nsip2s flex gap-2   ">
                                 <h2>₹</h2> <input disabled value={note[50].total} type="number" />
                             </div>
                         </div>
@@ -201,7 +201,7 @@ export default function Page() {
                                     onChange={(e) => updateNotes(20, e.target.value)}
                                 />
                             </div>
-                            <div className="nsip2s flex gap-2 bg-amber-800 ">
+                            <div className="nsip2s flex gap-2   ">
                                 <h2>₹</h2> <input disabled value={note[20].total} type="number" />
                             </div>
                         </div>
@@ -219,7 +219,7 @@ export default function Page() {
                                     onChange={(e) => updateNotes(10, e.target.value)}
                                 />
                             </div>
-                            <div className="nsip2s flex gap-2 bg-amber-800 ">
+                            <div className="nsip2s flex gap-2   ">
                                 <h2>₹</h2> <input disabled value={note[10].total} type="number" />
                             </div>
                         </div>

@@ -115,17 +115,17 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
 
           {/* MENU */}
-          <div className="flex-1 flex flex-col gap-6 mt-4">
+          <div className="flex-1 flex flex-col gap-2 mt-4">
             <div>
               <h2 className="text-text-secondary mb-2">MAIN MENU</h2>
               <div className="flex flex-col gap-2">
-                <Link href="/dashboard/worker" className={menuClass("/dashboard/worker")}>
+                <Link href="/dashboard/worker" className={menuClass("/dashboard/worker")} onClick={()=>{setIsSidebarOpen(false)}}>
                   <LayoutDashboard /> Dashboard
                 </Link>
-                <Link href="/dashboard/worker/order" className={menuClass("/dashboard/worker/order")}>
+                <Link href="/dashboard/worker/order" className={menuClass("/dashboard/worker/order")} onClick={()=> {setIsSidebarOpen(false)}}>
                   <Plus /> Add Order
                 </Link>
-                <Link href="/dashboard/worker/expense" className={menuClass("/dashboard/worker/expense")}>
+                <Link href="/dashboard/worker/expense" className={menuClass("/dashboard/worker/expense")} onClick={()=>{setIsSidebarOpen(false)}}>
                   <CreditCard /> Add Expense
                 </Link>
               </div>
@@ -134,7 +134,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             <div>
               <h2 className="text-text-secondary mb-1">TOOLS</h2>
               <div className="flex flex-col gap-1">
-                <Link href="/dashboard/worker/Mcounter" className={menuClass("/dashboard/worker/Mcounter")}>
+                <Link href="/dashboard/worker/Mcounter" className={menuClass("/dashboard/worker/Mcounter")} onClick={()=>{setIsSidebarOpen(false)}}>
                   <ReceiptIndianRupee /> Money Counter
                 </Link>
               </div>
@@ -143,7 +143,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             <div>
               <h2 className="text-text-secondary mb-1">ACCOUNT</h2>
               <div className="flex flex-col gap-1">
-                <Link href="/dashboard/worker/account" className={menuClass("/dashboard/worker/account")}>
+                <Link href="/dashboard/worker/account" className={menuClass("/dashboard/worker/account")} onClick={()=>{setIsSidebarOpen(false)}}>
                   <User /> My Account
                 </Link>
                 <Link href="/dashboard/worker/help" className={menuClass("/dashboard/worker/help")}>
