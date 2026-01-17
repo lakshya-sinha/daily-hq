@@ -24,6 +24,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { UserContext } from "@/context/UserContext";
 import ScrollFix from "@/components/Dashboard/utils/ScrollFix";
+import LogoutContainer from "@/components/Dashboard/Logout/LogoutContainer";
 
 
 interface User {
@@ -39,6 +40,8 @@ interface User {
 
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+
+  const [logoutRender, SetLogoutRender] = useState(false)
 
  const [user, setUser ] = useState<User>({
     _id: "",
@@ -65,16 +68,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
          ? "border border-blue-400 bg-blue-500/10 text-blue-300"
          : "text-gray-300 hover:bg-gray-800/50"
      }`
-
-    const LogOutUser = async () => {
-        try {
-            const logoutData = await axios.get('/api/auth/logout'); 
-            toast.success('logout successfull');
-            router.push('/login');
-        } catch (error) {
-            console.log(error);        
-        }
-    }
 
     useEffect(() => {
       async function getUserData(){
@@ -168,7 +161,10 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
             {/* LOGOUT */}
             <div className="border-t border-gray-700 pt-3">
-              <button className="menu-box flex gap-1 items-center p-2 text-red-400 hover:bg-red-500/10 rounded-lg w-full cursor-pointer" onClick={() => {LogOutUser()}}>  
+              <LogoutContainer open={logoutRender}/>
+              <button className="menu-box flex gap-1 items-center p-2 text-red-400 hover:bg-red-500/10 rounded-lg w-full cursor-pointer" onClick={() => {SetLogoutRender(!logoutRender) 
+                console.log(logoutRender)
+              }}>  
                 <LogOut />
                 <span className="hidden lg:block">Log Out</span>
               </button>
