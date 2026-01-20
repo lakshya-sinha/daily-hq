@@ -9,7 +9,8 @@ import {
   Search,
   Bell,
   CreditCard,
-  ReceiptIndianRupee
+  ReceiptIndianRupee,
+  BookText
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -137,10 +138,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 <Link href="/dashboard/worker/Mcounter" className={menuClass("/dashboard/worker/Mcounter")} onClick={()=>{setIsSidebarOpen(false)}}>
                   <ReceiptIndianRupee /> Money Counter
                 </Link>
+                <Link href="/dashboard/worker/birth" className={menuClass("/dashboard/worker/birth")} onClick={()=>{setIsSidebarOpen(false)}}>
+                  <BookText /> Birth
+                </Link>
               </div>
             </div>
-
-            <div>
+            
+                        <div>
               <h2 className="text-text-secondary mb-1">ACCOUNT</h2>
               <div className="flex flex-col gap-1">
                 <Link href="/dashboard/worker/account" className={menuClass("/dashboard/worker/account")} onClick={()=>{setIsSidebarOpen(false)}}>

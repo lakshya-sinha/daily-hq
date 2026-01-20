@@ -161,7 +161,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
             {/* LOGOUT */}
             <div className="border-t border-gray-700 pt-3">
-              <LogoutContainer open={logoutRender}/>
+              <LogoutContainer open={logoutRender}
+                              onClose={() => SetLogoutRender(false)}
+               />
               <button className="menu-box flex gap-1 items-center p-2 text-red-400 hover:bg-red-500/10 rounded-lg w-full cursor-pointer" onClick={() => {SetLogoutRender(!logoutRender) 
                 console.log(logoutRender)
               }}>  
