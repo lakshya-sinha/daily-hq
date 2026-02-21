@@ -11,6 +11,7 @@ interface BirthData {
   gender: string;
   dob: string;
   dobInWords: string;
+  aadhar: string;
 
   placeOfBirth: string;
   fatherName: string;
@@ -802,13 +803,14 @@ export default function BirthMain({ data }: BirthMainProps) {
           </div>
         </div>
         <div className="t m0 x18 h19 y3d ffd fs8 fc4 sc0 ls0 ws0">
-           XXXX-XXXX-
+          {data.fatherAadhar ? "XXXX-XXXX-" : ""}
+           
               <span className="__2 text-4xl">
                 {data.fatherAadhar}
               </span>
         </div>
         <div className="t m0 x7  y3e ffd fs8">
-              XXXX-XXXX-
+          {data.motherAadhar ? "XXXX-XXXX-" : ""}
               <span className="__2 text-4xl">
                 {data.motherAadhar}
               </span>
@@ -816,13 +818,19 @@ export default function BirthMain({ data }: BirthMainProps) {
         <div className="t m0 x6 h12 y3f ffe fs5 fc1 sc0 ls0 ws0">
           {data.fatherName.toUpperCase()}
         </div>
-        <div className="t m0 x6 h1f y40 ff4 fs8 fc1 sc0 ls0 ws0">
-              <span className="__2 text-3xl fs8">
+        <div className="t m0 x6 h1f y47 ff4 fs8 fc1 sc0 ls0 ws0">
+              <span className="__2 text-3xl fs8  ">
                 {data.parentAddress.toUpperCase()}
               </span>
         </div>
         <div className="t m0 x19 h12 y41 ffe fs5 fc1 sc0 ls0 ws0">
           {data.name.toUpperCase()}
+        </div>
+        <div className="t m0 x19 h1f y43 ffe fs5 fc1 sc0 ls0 ws0 relative">
+          <span className='mb-50' style={{display: 'fixed', bottom: '100px', left: '-230px'}}>
+            {data.aadhar ? "XXXX-XXXX-": ""}
+            {data.aadhar}
+          </span>
         </div>
         <div className='t m0 x16 h12 y41 ffe fs5 fc1 sc0 ls0 ws0' >
           {"     "}{data.gender.toUpperCase()}
@@ -831,12 +839,12 @@ export default function BirthMain({ data }: BirthMainProps) {
           19-12-2025 15:20:31
         </div>
         <div className="t m0 x5 h12 y43 ffe fs5 fc1 sc0 ls0 ws0">
-          {new Date(data.dob).toLocaleDateString().split("/").join("-")}
+          {new Date(data.dob).toLocaleDateString('en-GB').replaceAll('/', '-')}
         </div>
         <div className="t m0 x5 h1f y44 ff4 fs8 fc1 sc0 ls0 ws0">
           <span className="fff">
             
-            <span className="ff4">
+            <span className="ff4 " >
               {data.dobInWords.toUpperCase()}
               <span className="_ _2" />
               

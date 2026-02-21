@@ -20,12 +20,14 @@ export async function POST(request: NextRequest) {
              fatherAadhar, 
              motherAadhar, 
              childAddress, 
-             parentAddress } = reqBody;
+             parentAddress,
+             aadhar } = reqBody;
 
         const newBirth = new Birth({
             worker, 
             name, 
             gender, 
+            aadhar,
             dob, 
             dobInWords, 
             placeOfBirth, 

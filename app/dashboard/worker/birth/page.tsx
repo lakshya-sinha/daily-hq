@@ -17,6 +17,7 @@ interface FormData {
 
   name: string;
   gender: string;
+  aadhar: string;
 
   dob: string;
   dobInWords: string;
@@ -96,6 +97,7 @@ export default function Page() {
     worker: "",
     name: "",
     gender: "",
+    aadhar: "",
 
     dob: "",
     dobInWords: "",
@@ -113,6 +115,7 @@ export default function Page() {
   });
 
   const [fetchData, setFetchData] = useState<FormData[]>([]);
+  const [isAadhar, SetIsAadhar ] = useState(true)
 
   useEffect(()=> {console.log(fetchData)}, [fetchData])
 
@@ -134,7 +137,8 @@ export default function Page() {
     try {
       const res = await axios.post('/api/worker/birth/add', formData);  
       console.log(res);
-      toast.success('data added');
+      fetchBirth();
+      toast.success('Birth Successfully Created');
     } catch (error) {
         if (axios.isAxiosError(error)) {
           toast.error(error.response?.data?.message || "Request failed");
@@ -196,15 +200,30 @@ export default function Page() {
           className="input border p-2"
         />
 
+        <select name="isAadhar" id="" className="border" onChange={()=> {SetIsAadhar(!isAadhar)}}>
+          <option value="true" className="text-black">Child Aadhar  : Yes</option>
+          <option value="false" className="text-black">Child Aadhar : No</option>
+        </select>
+
+        {/* Child Aadhar  */}
+        <input
+          placeholder="Child Aadhar | Ex: 2263"
+          style={{display: isAadhar ? 'block' : 'none'}}
+          value={formData.aadhar}
+          onChange={e => setFormData(prev => ({ ...prev, aadhar: e.target.value }))}
+          className="input border p-2"
+        />
+
+
         {/* Gender */}
         <select
           value={formData.gender}
           onChange={e => setFormData(prev => ({ ...prev, gender: e.target.value }))}
-          className="input border p-2 text-amber-600"
+          className="input border p-2 "
         >
-          <option value="">Select Gender</option>
-          <option value="male ">Male</option>
-          <option value="female ">Female</option>
+          <option value="" className="text-black">Select Gender</option>
+          <option value="male " className="text-black">Male</option>
+          <option value="female " className="text-black">Female</option>
         </select>
 
         {/* DOB */}
@@ -235,14 +254,25 @@ export default function Page() {
           placeholder="Place of Birth"
           value={formData.placeOfBirth}
           onChange={e => setFormData(prev => ({ ...prev, placeOfBirth: e.target.value }))}
-          className="input border p-2"
+          className="input border p-2 col-span-full"
         />
+
+        
 
         {/* Father Name */}
         <input
           placeholder="Father Name"
           value={formData.fatherName}
           onChange={e => setFormData(prev => ({ ...prev, fatherName: e.target.value }))}
+          className="input border p-2"
+        />
+
+
+        {/* Father Aadhaar */}
+        <input
+          placeholder="Father Aadhaar | Ex: 4429"
+          value={formData.fatherAadhar}
+          onChange={e => setFormData(prev => ({ ...prev, fatherAadhar: e.target.value }))}
           className="input border p-2"
         />
 
@@ -254,17 +284,9 @@ export default function Page() {
           className="input border p-2"
         />
 
-        {/* Father Aadhaar */}
-        <input
-          placeholder="Father Aadhaar"
-          value={formData.fatherAadhar}
-          onChange={e => setFormData(prev => ({ ...prev, fatherAadhar: e.target.value }))}
-          className="input border p-2"
-        />
-
         {/* Mother Aadhaar */}
         <input
-          placeholder="Mother Aadhaar"
+          placeholder="Mother Aadhaar | Ex: 2269"
           value={formData.motherAadhar}
           onChange={e => setFormData(prev => ({ ...prev, motherAadhar: e.target.value }))}
           className="input border p-2"

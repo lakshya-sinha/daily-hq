@@ -17,6 +17,10 @@ const BirthSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+
+    aadhar: {
+      type: String,
+    },
     
     dob: {
       type: Date,
@@ -25,7 +29,6 @@ const BirthSchema = new mongoose.Schema({
 
     dobInWords: {
       type: String,
-      required: true,
       trim: true,
     },
 
@@ -49,12 +52,10 @@ const BirthSchema = new mongoose.Schema({
 
     fatherAadhar: {
       type: String,
-      match: /^[0-9]{4}$/, 
     },
 
     motherAadhar: {
       type: String,
-      match: /^[0-9]{4}$/,
     },
 
     childAddress: {
