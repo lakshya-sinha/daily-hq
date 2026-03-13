@@ -396,6 +396,7 @@ const Landing = () => {
             </div>
             <div className="third text-gray-200">
               <p>@ 2025 Daily HQ. All rights reserved</p>
+              <p>coded & crafted by lakshya 💖</p>
             </div>
           </div>
         </footer>
@@ -406,3 +407,4 @@ const Landing = () => {
 };
 
 export default Landing;
+
